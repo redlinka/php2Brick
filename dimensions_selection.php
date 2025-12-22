@@ -201,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <br><br><br><br><br><br><br><br><br><br>
                         <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
-                            <button href="crop_selection.php" class="btn btn-outline-secondary">← Back</button>
+                            <a href="crop_selection.php" class="btn btn-outline-secondary">← Back</a>
                             <button type="submit" class="btn btn-primary btn-lg">Next Step ➔</button>
                         </div>
                     </form>

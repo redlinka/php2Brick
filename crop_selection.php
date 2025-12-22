@@ -217,7 +217,7 @@ try {
                     </form>
 
                     <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
-                        <button href="index.php" class="btn btn-outline-secondary">Cancel</button>
+                        <a href="index.php" class="btn btn-outline-secondary">Cancel</a>
                         <button id="btnSave" class="btn btn-primary btn-lg">Next Step ➔</button>
                     </div>
                 </div>
