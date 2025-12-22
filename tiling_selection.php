@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $exePath      = __DIR__ . '/C_tiler.exe';
         $catalogPath  = __DIR__ . '/catalog.txt';
 
-        // Detect Java executable
+        // Detect Java executable (if the code is runnning on my personnal machine or the server)
         $javaCmd = 'java';
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             $javaCmd = '"C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.1.8-hotspot\\bin\\java.exe"';

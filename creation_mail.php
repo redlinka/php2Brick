@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $ins = $cnx->prepare("INSERT INTO Tokens2FA (user_id, token, is_used, created_at) VALUES (?, ?, ?, NOW())");
             $ins->execute([$_SESSION['tempId'], $token, 0]);
 
-            // Build verification link
+            // Construct verification link (creates the link depending on whether i'm testing it on my own machine or on the server)
             $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
             $domain = $_SERVER['HTTP_HOST'];
             $link = $protocol . $domain . dirname($_SERVER['PHP_SELF']) . '/verify_account.php?token=' . $token;

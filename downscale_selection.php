@@ -28,7 +28,7 @@ $sourceFile = $stmt->fetchColumn();
 $jarPath = __DIR__ . '/brain.jar';
 $sourcePath = __DIR__ . '/' . $imgDir . $sourceFile;
 
-// Detect Java executable
+// Detect Java executable (if the code is runnning on my personnal machine or the server)
 $javaCmd = 'java';
 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
     $javaCmd = '"C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.1.8-hotspot\\bin\\java.exe"';
