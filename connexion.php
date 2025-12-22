@@ -104,11 +104,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-light py-5">
+<body>
 
 <?php include("./includes/navbar.php"); ?>
 
-<div class="container">
+<div class="container bg-light py-5">
     <div class="row justify-content-center">
         <div class="col-md-6 col-lg-5">
 
