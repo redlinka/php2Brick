@@ -139,30 +139,46 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page upload img</title>
+    <title>Upload Image - Img2Brick</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* Modern Drag & Drop Styling */
         #dropArea {
-            border: 2px  #000 double;
-            padding: 40px;
+            border: 2px dashed #adb5bd;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 3rem;
             text-align: center;
             cursor: pointer;
-            color: #555;
-            margin-bottom: 20px;
-            transition: .2s;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+            position: relative;
         }
 
-        #dropArea.highlight {
-            border-color: #0a84ff;
-            background: #e6f0ff;
-            color: #0a84ff;
+        #dropArea:hover, #dropArea.highlight {
+            border-color: #0d6efd;
+            background-color: #e9ecef;
+            color: #0d6efd;
         }
 
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #6c757d;
+        }
+
+        #dropArea:hover .upload-icon, #dropArea.highlight .upload-icon {
+            color: #0d6efd;
+        }
+
+        /* Error List Styling */
         .error-list {
             background-color: #fee;
             border: 1px solid #fcc;
             border-radius: 4px;
             padding: 10px;
             margin-bottom: 15px;
+            text-align: left;
         }
         .error-list ul {
             margin: 5px 0;
@@ -172,45 +188,69 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             color: #c00;
         }
     </style>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="bg-light d-flex flex-column min-vh-100">
 <?php include("./includes/navbar.php"); ?>
 
-<div class="container py-5 text-center">
-    <h1>Upload your image:</h1>
+<div class="container flex-grow-1 d-flex align-items-center justify-content-center py-5">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4 p-md-5 text-center">
 
-    <?php if (!empty($errors)): ?>
-        <div class="error-list">
-            <ul>
-                <?php foreach ($errors as $error): ?>
-                    <li><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></li>
-                <?php endforeach; ?>
-            </ul>
+                <h2 class="fw-bold mb-3">Upload your Image</h2>
+                <p class="text-muted mb-4">Start your mosaic journey by selecting a photo.</p>
+
+                <?php if (!empty($errors)): ?>
+                    <div class="error-list">
+                        <ul>
+                            <?php foreach ($errors as $error): ?>
+                                <li><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+
+                <form action="" method="post" enctype="multipart/form-data">
+
+                    <div id="dropArea">
+                        <div class="upload-icon"></div>
+                        <h5 class="fw-bold">Drag & Drop your image here</h5>
+                        <p class="text-muted small mb-0">or click to browse files</p>
+                    </div>
+
+                    <input type="file" id="imageUpload" name="image" accept="image/*" required style="display:none;">
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Upload & Continue ➔</button>
+                    </div>
+
+                    <div class="mt-3 text-muted small">
+                        Supported: JPG, PNG, WEBP, GIF (Max 2MB)
+                    </div>
+                </form>
+            </div>
         </div>
-    <?php endif; ?>
-
-    <form action="" method="post" enctype="multipart/form-data">
-
-        <div id="dropArea">Drag & drop your image here or click to select a file</div>
-
-        <input type="file" id="imageUpload" name="image" accept="image/*" required style="display:none;">
-
-        <input type="submit" value="Upload">
-    </form>
+    </div>
 </div>
+
+<?php include("./includes/footer.php"); ?>
 
 <script>
     const dropArea = document.getElementById("dropArea");
     const fileInput = document.getElementById("imageUpload");
 
+    // Click to open file dialog
     dropArea.addEventListener("click", () => fileInput.click());
 
+    // Handle file selection via Click
     fileInput.addEventListener("change", () => {
-        if (fileInput.files[0]) dropArea.textContent = fileInput.files[0].name;
+        if (fileInput.files[0]) {
+            updateDropArea(fileInput.files[0].name);
+        }
     });
 
+    // Handle Drag Events
     ["dragenter", "dragover"].forEach(eventName => {
         dropArea.addEventListener(eventName, e => {
             e.preventDefault();
@@ -225,15 +265,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         });
     });
 
+    // Handle Drop
     dropArea.addEventListener("drop", e => {
         const file = e.dataTransfer.files[0];
         if (!file) return;
 
         fileInput.files = e.dataTransfer.files;
-        dropArea.textContent = file.name;
+        updateDropArea(file.name);
     });
-</script>
 
-<?php include("./includes/footer.php"); ?>
+    // Visual feedback helper
+    function updateDropArea(filename) {
+        dropArea.classList.add('highlight');
+        dropArea.innerHTML = `
+            <div class="upload-icon text-primary">📄</div>
+            <h5 class="fw-bold text-primary">${filename}</h5>
+            <p class="text-muted small mb-0">Click to change file</p>
+        `;
+    }
+</script>
 </body>
 </html>
