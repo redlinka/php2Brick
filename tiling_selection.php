@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $errors[] = "Database Error";
             }
         } else {
-            $errors[] = "Java/C Error";
+            $errors[] = "Java/C Error" . $javaCmd;
         }
     }
 } else {
