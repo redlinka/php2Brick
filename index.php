@@ -214,7 +214,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <form action="" method="post" enctype="multipart/form-data">
 
                     <div id="dropArea">
-                        <div class="upload-icon"></div>
                         <h5 class="fw-bold">Drag & Drop your image here</h5>
                         <p class="text-muted small mb-0">or click to browse files</p>
                     </div>
@@ -278,7 +277,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     function updateDropArea(filename) {
         dropArea.classList.add('highlight');
         dropArea.innerHTML = `
-            <div class="upload-icon text-primary">📄</div>
             <h5 class="fw-bold text-primary">${filename}</h5>
             <p class="text-muted small mb-0">Click to change file</p>
         `;

@@ -182,6 +182,9 @@ try {
     <div class="row g-4">
         <div class="col-lg-8">
             <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Step 1: Crop</h5>
+                </div>
                 <div class="card-body p-2">
                     <div class="crop-area">
                         <img id="image" src="<?= htmlspecialchars($displayPath) ?>" crossorigin="anonymous">
@@ -193,7 +196,7 @@ try {
         <div class="col-lg-4">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-body d-flex flex-column">
-                    <h3 class="mb-3">Crop Your Image</h3>
+                    <h3 class="mb-3">Crop Your Image.</h3>
                     <p class="text-muted">Choose a preset or drag the handles freely.</p>
 
                     <div class="mb-4">
@@ -214,7 +217,7 @@ try {
                     </form>
 
                     <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
-                        <a href="index.php" class="btn btn-outline-secondary">Cancel</a>
+                        <button href="index.php" class="btn btn-outline-secondary">Cancel</button>
                         <button id="btnSave" class="btn btn-primary btn-lg">Next Step ➔</button>
                     </div>
                 </div>

@@ -74,13 +74,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .error-list { background: #fee; border: 1px solid #fcc; padding: 10px; margin-bottom: 15px; border-radius: 4px; }
         .error-list li { color: #c00; }
 
-        /* Preview Image */
+        /* Preview Image Area */
+        .img-area {
+            height: 70vh;
+            background: #212529;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
         .preview-img {
             width: 100%;
-            height: 300px;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
-            background: #212529;
-            border-radius: 8px;
             cursor: zoom-in;
         }
 
@@ -100,103 +110,101 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php include("./includes/navbar.php"); ?>
 
 <div class="container bg-light py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow border-0">
+
+    <?php if (!empty($errors)): ?>
+        <div class="error-list">
+            <ul>
+                <?php foreach ($errors as $err): ?>
+                    <li><?= htmlspecialchars($err) ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0">
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0">Step 2: Choose Size</h5>
                 </div>
-                <div class="card-body p-4">
-
-                    <?php if (!empty($errors)): ?>
-                        <div class="error-list">
-                            <ul>
-                                <?php foreach ($errors as $err): ?>
-                                    <li><?= htmlspecialchars($err) ?></li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                    <?php endif; ?>
-
-                    <div class="row g-4">
-                        <div class="col-md-5 text-center">
-                            <img src="<?= htmlspecialchars($sourceImg) ?>"
-                                 class="preview-img shadow-sm mb-2"
-                                 onclick="openModal(this.src)"
-                                 alt="Source">
-                            <p class="text-muted small">Original: <?= $origW ?>px x <?= $origH ?>px</p>
-
-                            <div class="alert alert-info py-2">
-                                Output: <strong id="displayDims">Calculating...</strong> studs
-                            </div>
-                        </div>
-
-                        <div class="col-md-7">
-                            <form method="POST" id="dimForm">
-                                <input type="hidden" name="csrf" value="<?= htmlspecialchars(csrf_get()) ?>">
-
-                                <input type="hidden" id="wInput" name="width" value="">
-                                <input type="hidden" id="hInput" name="height" value="">
-
-                                <h6 class="fw-bold mb-3">Select Mode</h6>
-
-                                <div class="d-grid gap-2">
-                                    <button type="button" class="btn btn-outline-secondary preset-btn active" id="btnRatio" onclick="setMode('ratio')">
-                                        <strong>Keep Ratio</strong>
-                                        <small>Adjust scale, preserves shape (Recommended)</small>
-                                    </button>
-
-                                    <div class="btn-group w-100">
-                                        <button type="button" class="btn btn-outline-secondary preset-btn" id="btnSmall" onclick="setMode('small')">
-                                            <strong>Small</strong>
-                                            <small>32 x 32</small>
-                                        </button>
-                                        <button type="button" class="btn btn-outline-secondary preset-btn" id="btnMedium" onclick="setMode('medium')">
-                                            <strong>Medium</strong>
-                                            <small>64 x 64</small>
-                                        </button>
-                                        <button type="button" class="btn btn-outline-secondary preset-btn" id="btnLarge" onclick="setMode('large')">
-                                            <strong>Large</strong>
-                                            <small>128 x 128</small>
-                                        </button>
-                                    </div>
-
-                                    <button type="button" class="btn btn-outline-secondary preset-btn" id="btnCustom" onclick="setMode('custom')">
-                                        <strong>Custom</strong>
-                                        <small>Manual entry (Max 1024)</small>
-                                    </button>
-                                </div>
-
-                                <div id="ratioControls" class="mt-3 p-3 bg-light rounded border">
-                                    <label class="form-label fw-bold d-flex justify-content-between">
-                                        <span>Scale Factor</span>
-                                        <span id="sliderValDisplay" class="text-primary">Medium</span>
-                                    </label>
-                                    <input type="range" class="form-range" id="ratioSlider" min="16" max="256" step="16" value="64">
-                                    <div class="form-text small">Slide to change size. Dimensions snap to 16.</div>
-                                </div>
-
-                                <div id="customControls" class="mt-3 p-3 bg-light rounded border" style="display:none;">
-                                    <div class="row g-2">
-                                        <div class="col">
-                                            <label class="small fw-bold">Width</label>
-                                            <input type="number" id="customW" class="form-control" placeholder="64" min="16" max="1024" step="16">
-                                        </div>
-                                        <div class="col">
-                                            <label class="small fw-bold">Height</label>
-                                            <input type="number" id="customH" class="form-control" placeholder="64" min="16" max="1024" step="16">
-                                        </div>
-                                    </div>
-                                    <div class="form-text small mt-1">Must be multiples of 16. Max 1024.</div>
-                                </div>
-
-                                <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
-                                    <a href="crop_selection.php" class="btn btn-outline-secondary">← Back</a>
-                                    <button type="submit" class="btn btn-primary btn-lg">Next Step ➔</button>
-                                </div>
-                            </form>
-                        </div>
+                <div class="card-body p-2">
+                    <div class="img-area shadow-sm">
+                        <img src="<?= htmlspecialchars($sourceImg) ?>" class="preview-img" onclick="openModal(this.src)" alt="Source">
                     </div>
+
+                    <div class="d-flex justify-content-between px-2 mt-2 text-muted small">
+                        <span>Original: <strong><?= $origW ?> x <?= $origH ?></strong> px</span>
+                        <span>Output: <strong id="displayDims" class="text-primary">Calculating...</strong> studs</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body d-flex flex-column">
+                    <h3 class="mb-3">Select a mode.</h3>
+                    <form method="POST" id="dimForm">
+                        <input type="hidden" name="csrf" value="<?= htmlspecialchars(csrf_get()) ?>">
+
+                        <input type="hidden" id="wInput" name="width" value="">
+                        <input type="hidden" id="hInput" name="height" value="">
+
+                        <div class="d-grid gap-2">
+                            <button type="button" class="btn btn-outline-secondary preset-btn active" id="btnRatio" onclick="setMode('ratio')">
+                                <strong>Keep Ratio</strong>
+                                <small>Adjust scale, preserves shape (Recommended)</small>
+                            </button>
+
+                            <div class="btn-group w-100">
+                                <button type="button" class="btn btn-outline-secondary preset-btn" id="btnSmall" onclick="setMode('small')">
+                                    <strong>Small</strong>
+                                    <small>32 x 32</small>
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary preset-btn" id="btnMedium" onclick="setMode('medium')">
+                                    <strong>Medium</strong>
+                                    <small>64 x 64</small>
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary preset-btn" id="btnLarge" onclick="setMode('large')">
+                                    <strong>Large</strong>
+                                    <small>128 x 128</small>
+                                </button>
+                            </div>
+
+                            <button type="button" class="btn btn-outline-secondary preset-btn" id="btnCustom" onclick="setMode('custom')">
+                                <strong>Custom</strong>
+                                <small>Manual entry (Max 1024)</small>
+                            </button>
+                        </div>
+
+                        <div id="ratioControls" class="mt-3 p-3 bg-light rounded border">
+                            <label class="form-label fw-bold d-flex justify-content-between">
+                                <span>Scale Factor</span>
+                                <span id="sliderValDisplay" class="text-primary">Medium</span>
+                            </label>
+                            <input type="range" class="form-range" id="ratioSlider" min="16" max="256" step="16" value="64">
+                            <div class="form-text small">Slide to change size. Dimensions snap to 16.</div>
+                        </div>
+
+                        <div id="customControls" class="mt-3 p-3 bg-light rounded border" style="display:none;">
+                            <div class="row g-2">
+                                <div class="col">
+                                    <label class="small fw-bold">Width</label>
+                                    <input type="number" id="customW" class="form-control" placeholder="64" min="16" max="1024" step="16">
+                                </div>
+                                <div class="col">
+                                    <label class="small fw-bold">Height</label>
+                                    <input type="number" id="customH" class="form-control" placeholder="64" min="16" max="1024" step="16">
+                                </div>
+                            </div>
+                            <div class="form-text small mt-1">Must be multiples of 16. Max 1024.</div>
+                        </div>
+                        <br><br><br><br><br><br><br><br><br><br>
+                        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+                            <button href="crop_selection.php" class="btn btn-outline-secondary">← Back</button>
+                            <button type="submit" class="btn btn-primary btn-lg">Next Step ➔</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -289,7 +297,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Update UI Text
-        displayDims.innerText = `${w} x ${h}`;
+        // This line was crashing because displayDims didn't exist in HTML
+        if (displayDims) {
+            displayDims.innerText = `${w} x ${h}`;
+        }
 
         // Update Hidden Inputs
         wInput.value = w;
