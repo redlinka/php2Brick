@@ -172,25 +172,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         /* Error List Styling */
-        .error-list {
-            background-color: #fee;
-            border: 1px solid #fcc;
-            border-radius: 4px;
-            padding: 10px;
-            margin-bottom: 15px;
-            text-align: left;
-        }
-        .error-list ul {
-            margin: 5px 0;
-            padding-left: 20px;
-        }
-        .error-list li {
-            color: #c00;
-        }
+        .error-list {background-color: #fee;border: 1px solid #fcc;border-radius: 4px;padding: 10px;margin-bottom: 15px;text-align: left;}
+        .error-list ul {margin: 5px 0;padding-left: 20px;}
+        .error-list li {color: #c00;}
     </style>
 </head>
 
 <body class="bg-light d-flex flex-column min-vh-100">
+
 <?php include("./includes/navbar.php"); ?>
 
 <div class="container flex-grow-1 d-flex align-items-center justify-content-center py-5">

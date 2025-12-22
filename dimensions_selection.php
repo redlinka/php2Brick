@@ -71,9 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Step 2: Dimensions</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .error-list { background: #fee; border: 1px solid #fcc; padding: 10px; margin-bottom: 15px; border-radius: 4px; }
-        .error-list li { color: #c00; }
-
         /* Preview Image Area */
         .img-area {
             height: 70vh;
@@ -103,6 +100,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .preset-btn { text-align: left; position: relative; margin-bottom: 10px; }
         .preset-btn small { display: block; font-size: 0.75rem; opacity: 0.8; }
         .preset-btn.active { background-color: #6c757d; color: white; border-color: #6c757d; }
+
+        /* Error List Styling */
+        .error-list {background-color: #fee;border: 1px solid #fcc;border-radius: 4px;padding: 10px;margin-bottom: 15px;text-align: left;}
+        .error-list ul {margin: 5px 0;padding-left: 20px;}
+        .error-list li {color: #c00;}
     </style>
 </head>
 <body>

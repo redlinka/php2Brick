@@ -144,23 +144,10 @@ try {
             max-height: 100%;
             display: block;
         }
-
-        .error-list {
-            background-color: #fee;
-            border: 1px solid #fcc;
-            border-radius: 4px;
-            padding: 10px;
-            margin-bottom: 15px;
-        }
-
-        .error-list ul {
-            margin: 5px 0;
-            padding-left: 20px;
-        }
-
-        .error-list li {
-            color: #c00;
-        }
+        /* Error List Styling */
+        .error-list {background-color: #fee;border: 1px solid #fcc;border-radius: 4px;padding: 10px;margin-bottom: 15px;text-align: left;}
+        .error-list ul {margin: 5px 0;padding-left: 20px;}
+        .error-list li {color: #c00;}
     </style>
 </head>
 <body>
