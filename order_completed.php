@@ -66,7 +66,7 @@ try {
     <div class="text-center mb-5">
         <div class="conf-icon">✓</div>
         <h1 class="fw-bold mt-2">Order Successfully Placed!</h1>
-        <p class="text-muted">Thank you for your purchase. A confirmation email has been sent.</p>
+        <p class="text-muted">Thank you for your purchase !</p>
     </div>
 
     <div class="row justify-content-center">
