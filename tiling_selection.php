@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $errors[] = "Database Error";
             }
         } else {
-            $errors[] = "Java/C Error" . $javaCmd;
+            $errors[] = "Java/C Error :" . $javaCmd;
         }
     }
 } else {
@@ -277,9 +277,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                             </form>
 
-                            <div class="text-center mt-2">
-                                <a href="filter_selection.php" class="text-muted small text-decoration-none">Back to Filters</a>
-                            </div>
                         </div>
                     </div>
                 </div>
